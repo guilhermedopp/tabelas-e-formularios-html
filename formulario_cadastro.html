@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Cadastro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        form {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 98%; /* Largura de 98%, sem encostar nas bordas */
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-left: auto;
+            margin-right: auto; /* Centraliza os inputs e textarea */
+            display: block;
+        }
+        textarea {
+            height: 200px; /* Altura da textarea */
+        }
+        input[type="checkbox"], input[type="radio"] {
+            width: auto;
+            margin-right: 8px;
+        }
+        input:invalid {
+            border-color: red;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error {
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+
+    <form id="cadastroForm" action="#" method="POST">
+        <h2>Cadastro de Usuário</h2>
+        
+        <label for="nome">Nome Completo:</label>
+        <input type="text" id="nome" name="nome" required>
+
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" required>
+        
+        <label for="senha">Senha (mínimo 8 caracteres):</label>
+        <input type="password" id="senha" name="senha" minlength="8" required>
+
+        <label for="data_nascimento">Data de Nascimento:</label>
+        <input type="date" id="data_nascimento" name="data_nascimento" required>
+        
+        <label>Gênero:</label>
+        <label for="masculino">Masculino</label>
+        <input type="radio" id="masculino" name="genero" value="masculino" required>
+        
+        <label for="feminino">Feminino</label>
+        <input type="radio" id="feminino" name="genero" value="feminino">
+        
+        <label>Interesses:</label>
+        <label for="esportes">Esportes</label>
+        <input type="checkbox" id="esportes" name="interesses" value="Esportes">
+        
+        <label for="musica">Música</label>
+        <input type="checkbox" id="musica" name="interesses" value="Música">
+        
+        <label for="tecnologia">Tecnologia</label>
+        <input type="checkbox" id="tecnologia" name="interesses" value="Tecnologia">
+       
+        <label for="cidade">Cidade:</label>
+        <select id="cidade" name="cidade" required>
+            <option value="">Selecione sua cidade</option>
+            <option value="São Paulo">São Paulo</option>
+            <option value="Rio de Janeiro">Rio de Janeiro</option>
+            <option value="Belo Horizonte">Belo Horizonte</option>
+            <option value="Curitiba">Curitiba</option>
+        </select>
+
+        <label for="produtos">Quantidade de Produtos:</label>
+        <input type="number" id="produtos" name="produtos" min="1" max="100" required>
+
+        <label for="observacoes">Observações Adicionais:</label>
+        <textarea id="observacoes" name="observacoes" placeholder="Escreva suas observações aqui..."></textarea>
+
+        <button type="submit">Cadastrar</button>
+    </form>
+
+    <script>
+        document.getElementById('cadastroForm').addEventListener('submit', function(event) {
+            const email = document.getElementById('email');
+            const senha = document.getElementById('senha');
+            const dataNascimento = document.getElementById('data_nascimento');
+            const dataAtual = new Date();
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email.value)) {
+                email.classList.add('error');
+                alert('Por favor, insira um e-mail válido.');
+                event.preventDefault();
+                return;
+            } else {
+                email.classList.remove('error');
+            }
+
+            if (senha.value.length < 8) {
+                senha.classList.add('error');
+                alert('A senha deve ter no mínimo 8 caracteres.');
+                event.preventDefault();
+                return;
+            } else {
+                senha.classList.remove('error');
+            }
+
+            if (new Date(dataNascimento.value) >= dataAtual) {
+                dataNascimento.classList.add('error');
+                alert('A data de nascimento deve ser no passado.');
+                event.preventDefault();
+                return;
+            } else {
+                dataNascimento.classList.remove('error');
+            }
+        });
+    </script>
+
+</body>
+</html>
